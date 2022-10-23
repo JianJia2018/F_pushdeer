@@ -1,4 +1,4 @@
-package ccc.f_pushdeer
+package com.pushdeer.os
 
 import io.flutter.embedding.android.FlutterActivity
 

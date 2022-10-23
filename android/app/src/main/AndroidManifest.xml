@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ccc.f_pushdeer">
+    package="com.pushdeer.os">
    <application
         android:label="f_pushdeer"
         android:name="${applicationName}"
