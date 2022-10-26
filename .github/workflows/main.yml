@@ -6,11 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-flutter-version:
-    run-on：ubuntu-latest
-    steps
-      - uses:actions/checkout@v3
-      - uses:subosito/flutter-action@v2
+  Check-Flutter:
+    name: check-futter
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.3.5'
           channel: 'stable'
