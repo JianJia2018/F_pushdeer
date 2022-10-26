@@ -7,13 +7,29 @@ on:
 
 jobs:
   Check-Flutter:
-    name: check-futter
+    name: check-flutter
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.3.5'
+          flutter-version: '3.x'
           channel: 'stable'
       - run: flutter --version
+  
+  Build-APK:
+    name: build-apk
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+          channel: 'stable'
+      - run: flutter pub get
+      - run: flutter build apk
   
