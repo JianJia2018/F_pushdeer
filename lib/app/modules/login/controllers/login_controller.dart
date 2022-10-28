@@ -24,7 +24,7 @@ class LoginController extends GetxController {
   void wxInit() {
     fluwx.weChatResponseEventHandler.distinct((a, b) => a == b).listen((res) {
       if (res is fluwx.WeChatAuthResponse) {
-        int errCode = res.errCode;
+        int? errCode = res.errCode;
         print('111111111$errCode');
         if (errCode == 0) {
           String? code = res.code;
