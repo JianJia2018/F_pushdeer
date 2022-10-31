@@ -36,7 +36,7 @@ jobs:
           architecture: x64 # optional, x64 or arm64
       - run: flutter pub get
       - run: flutter build apk
-      - uses: ncipollo/release-action@v1.1.1
+      - uses: ncipollo/release-action@v1.11.1
         with:
           artifacts: "build/app/outputs/apk/release/app-release.apk"
           allowUpdates: true
