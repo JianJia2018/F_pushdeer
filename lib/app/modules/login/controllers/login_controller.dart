@@ -1,9 +1,15 @@
+import 'package:f_pushdeer/app/data/api/home_api.dart';
+import 'package:f_pushdeer/app/data/models/base_res.dart';
 import 'package:get/get.dart';
 
 import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
 
+import '../../../data/models/models.dart';
+
 class LoginController extends GetxController {
   //TODO: Implement LoginController
+
+  final provider = Get.find<HomeProvider>();
 
   @override
   void onInit() {
@@ -34,6 +40,14 @@ class LoginController extends GetxController {
         } else if (errCode == -2) {}
       }
     });
+  }
+
+  devJump() async {
+    final Response<BaseResponse> res = await provider.loginFake();
+    LoginFake body = LoginFake.fromJson(res.body?.content);
+    final Response<BaseResponse> res2 =
+        await provider.userInfo(body.token ?? '');
+    print('loginFake${res.body?.content},,${res2.body?.content}');
   }
 
   voidJump() {

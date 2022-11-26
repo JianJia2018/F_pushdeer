@@ -14,13 +14,25 @@ class LoginView extends GetView<LoginController> {
         centerTitle: true,
       ),
       body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              controller.voidJump();
-            },
-            child: const Text(
-              '微信登录',
-            )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  controller.devJump();
+                },
+                child: const Text(
+                  '开发登录',
+                )),
+            ElevatedButton(
+                onPressed: () {
+                  controller.voidJump();
+                },
+                child: const Text(
+                  '微信登录',
+                )),
+          ],
+        ),
       ),
     );
   }
