@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+void main() async {
   _initFluwx() async {
     // await Fluwx.registerWxApi(
     //   appId: "APPID",     //传入注册的应用id
@@ -22,6 +23,7 @@ void main() {
     print("微信安装结果：${isInstall.toString()}");
   }
 
+  await GetStorage.init();
   runApp(GetMaterialApp(
     title: "Application",
     initialRoute: AppPages.INITIAL,

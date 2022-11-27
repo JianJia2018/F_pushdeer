@@ -1,5 +1,8 @@
 import 'package:f_pushdeer/app/data/api/home_api.dart';
 import 'package:f_pushdeer/app/data/models/base_res.dart';
+import 'package:f_pushdeer/app/data/models/user_info.dart';
+import 'package:f_pushdeer/app/modules/home/views/home_view.dart';
+import 'package:f_pushdeer/app/utils/storage.dart';
 import 'package:get/get.dart';
 
 import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
@@ -47,7 +50,12 @@ class LoginController extends GetxController {
     LoginFake body = LoginFake.fromJson(res.body?.content);
     final Response<BaseResponse> res2 =
         await provider.userInfo(body.token ?? '');
+
+    UserInfo user = UserInfo.fromJson(res2.body?.content);
+    globalStorage.write('token', body.token ?? '');
     print('loginFake${res.body?.content},,${res2.body?.content}');
+
+    Get.off(const HomeView());
   }
 
   voidJump() {
