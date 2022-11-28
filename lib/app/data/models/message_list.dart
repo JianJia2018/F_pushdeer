@@ -25,6 +25,7 @@ class Messages {
   String? desp;
   String? type;
   String? createdAt;
+  String? pushkeyName;
 
   Messages(
       {this.id, this.uid, this.text, this.desp, this.type, this.createdAt});
@@ -35,6 +36,7 @@ class Messages {
     text = json["text"];
     desp = json["desp"];
     type = json["type"];
+    pushkeyName = json["pushkey_name"];
     createdAt = json["created_at"];
   }
 
@@ -45,6 +47,7 @@ class Messages {
     _data["text"] = text;
     _data["desp"] = desp;
     _data["type"] = type;
+    _data["pushkey_name"] = pushkeyName;
     _data["created_at"] = createdAt;
     return _data;
   }

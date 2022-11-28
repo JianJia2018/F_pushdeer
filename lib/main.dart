@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
 
 import 'package:get/get.dart';
@@ -24,6 +27,14 @@ void main() async {
   }
 
   await GetStorage.init();
+
+  if (Platform.isAndroid) {
+    // 设置android状态栏为透明的沉浸，在渲染之前MaterialApp组件会覆盖掉这个值。
+    SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, //状态栏的颜色根据需要更改
+    );
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  }
   runApp(GetMaterialApp(
     title: "Application",
     initialRoute: AppPages.INITIAL,

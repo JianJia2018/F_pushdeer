@@ -1,3 +1,4 @@
+import 'package:f_pushdeer/app/data/api/home_api.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -10,13 +11,28 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController());
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
-      ),
+      drawer: Drawer(),
+      appBar: PreferredSize(
+          child: AppBar(
+            actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+          ),
+          preferredSize: Size.fromHeight(40)),
       body: Container(
+        padding: const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 10),
         child: Column(children: [
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     IconButton(
+          //         onPressed: () {
+          //          .openDrawer();
+          //         },
+          //         icon: Icon(Icons.menu)),
+          //     IconButton(onPressed: () {}, icon: Icon(Icons.add))
+          //   ],
+          // ),
           Row(
             children: [
               ElevatedButton(

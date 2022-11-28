@@ -31,6 +31,13 @@ class LoginView extends GetView<LoginController> {
                 child: const Text(
                   '微信登录',
                 )),
+            ElevatedButton(
+                onPressed: () {
+                  controller.voidJump();
+                },
+                child: const Text(
+                  'simple_token登录',
+                )),
           ],
         ),
       ),

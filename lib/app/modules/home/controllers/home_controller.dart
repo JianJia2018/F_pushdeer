@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   HomeController();
   //TODO: Implement HomeController
-  final provider = Get.find<HomeProvider>();
+  final provider = Get.put(HomeProvider());
 
   final devicesId = ''.obs;
 
@@ -20,6 +20,7 @@ class HomeController extends GetxController {
     super.onInit();
 
     // initDevices();
+    messageList();
   }
 
   @override
@@ -57,7 +58,7 @@ class HomeController extends GetxController {
     final Response<BaseResponse> res1 = await provider.messageList();
     MessageList body1 = MessageList.fromJson(res1.body?.content);
 
-    print('res1.body${res1.body?.content}');
+    print('messageList.body${res1.body?.content}');
 
     messages.value = body1.messages ?? [];
   }
