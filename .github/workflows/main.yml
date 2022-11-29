@@ -121,7 +121,6 @@ jobs:
   out-print:
     steps:
       - uses: actions/checkout@v3
-      - id: flutter-action
       - uses: subosito/flutter-action@v2.8.0
         with:
           channel: 'stable'
