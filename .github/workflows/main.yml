@@ -50,7 +50,6 @@ jobs:
           channel: "stable"
           architecture: x64
       - run: flutter pub get
-      - run: flutter test
       - run: flutter build ios --release --no-codesign
 
   build-Web:
@@ -61,8 +60,11 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: flutter test
       - run: flutter build web
+      - uses: ncipollo/release-action@v1.11.1
+        with:
+          name: web-release
+          path: ./build/web
 
   build-Windows:
     runs-on: windows-latest
@@ -73,6 +75,17 @@ jobs:
           channel: "beta"
       - run: flutter config --enable-windows-desktop
       - run: flutter build windows
+      - uses: ncipollo/release-action@v1.11.1
+        with:
+          artifacts: "build/app/outputs/apk/release/app-release.apk"
+          allowUpdates: true
+      - run: |
+          echo CACHE-PATH=${{ steps.flutter-action.outputs.CACHE-PATH }}
+          echo CACHE-KEY=${{ steps.flutter-action.outputs.CACHE-KEY }}
+          echo CHANNEL=${{ steps.flutter-action.outputs.CHANNEL }}
+          echo VERSION=${{ steps.flutter-action.outputs.VERSION }}
+          echo ARCHITECTURE=${{ steps.flutter-action.outputs.ARCHITECTURE }}
+      shell: bash
 
   build-Linux:
     runs-on: ubuntu-latest
@@ -97,3 +110,25 @@ jobs:
           architecture: x64
       - run: flutter config --enable-macos-desktop
       - run: flutter build macos
+      - run: |
+          echo CACHE-PATH=${{ steps.flutter-action.outputs.CACHE-PATH }}
+          echo CACHE-KEY=${{ steps.flutter-action.outputs.CACHE-KEY }}
+          echo CHANNEL=${{ steps.flutter-action.outputs.CHANNEL }}
+          echo VERSION=${{ steps.flutter-action.outputs.VERSION }}
+          echo ARCHITECTURE=${{ steps.flutter-action.outputs.ARCHITECTURE }}
+      shell: bash
+  
+  out-print:
+    steps:
+      - uses: actions/checkout@v3
+      - id: flutter-action
+      - uses: subosito/flutter-action@v2.8.0
+        with:
+          channel: 'stable'
+        - run: |
+            echo CACHE-PATH=${{ steps.flutter-action.outputs.CACHE-PATH }}
+            echo CACHE-KEY=${{ steps.flutter-action.outputs.CACHE-KEY }}
+            echo CHANNEL=${{ steps.flutter-action.outputs.CHANNEL }}
+            echo VERSION=${{ steps.flutter-action.outputs.VERSION }}
+            echo ARCHITECTURE=${{ steps.flutter-action.outputs.ARCHITECTURE }}
+      shell: bash
