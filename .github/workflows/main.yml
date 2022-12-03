@@ -17,40 +17,40 @@ jobs:
           channel: "stable"
       - run: flutter --version
 
-  Build-APK:
-    name: build-apk
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v2
-        with:
-          distribution: "zulu"
-          java-version: "12.x"
-      - uses: subosito/flutter-action@v2.8.0
-        with:
-          flutter-version: "3.x"
-          channel: "stable"
-          cache: true
-          cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
-          cache-path: ${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:1
-          architecture: x64 # optional, x64 or arm64
-      - run: flutter pub get
-      - run: flutter build apk
-      - uses: ncipollo/release-action@v1.11.1
-        with:
-          artifacts: "build/app/outputs/apk/release/app-release.apk"
-          allowUpdates: true
+  # Build-APK:
+  #   name: build-apk
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-java@v2
+  #       with:
+  #         distribution: "zulu"
+  #         java-version: "12.x"
+  #     - uses: subosito/flutter-action@v2.8.0
+  #       with:
+  #         flutter-version: "3.x"
+  #         channel: "stable"
+  #         cache: true
+  #         cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
+  #         cache-path: ${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:1
+  #         architecture: x64 # optional, x64 or arm64
+  #     - run: flutter pub get
+  #     - run: flutter build apk
+  #     - uses: ncipollo/release-action@v1.11.1
+  #       with:
+  #         artifacts: "build/app/outputs/apk/release/app-release.apk"
+  #         allowUpdates: true
 
-  build-IOS:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.8.0
-        with:
-          channel: "stable"
-          architecture: x64
-      - run: flutter pub get
-      - run: flutter build ios --release --no-codesign
+  # build-IOS:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: subosito/flutter-action@v2.8.0
+  #       with:
+  #         channel: "stable"
+  #         architecture: x64
+  #     - run: flutter pub get
+  #     - run: flutter build ios --release --no-codesign
 
   build-Web:
     runs-on: ubuntu-latest
@@ -75,8 +75,10 @@ jobs:
           channel: "beta"
       - run: flutter config --enable-windows-desktop
       - run: flutter build windows
-      - run: |
-          dir
+      - uses: actions/upload-artifact@v2
+        with:
+          name: web-release
+          path: ./build/windows
 
   build-Linux:
     runs-on: ubuntu-latest
@@ -91,22 +93,26 @@ jobs:
       - run: flutter config --enable-linux-desktop
       - run: flutter build linux
       - run: tree
-
-  build-Mac:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.8.0
+      - uses: actions/upload-artifact@v2
         with:
-          channel: "stable"
-          architecture: x64
-      - run: flutter config --enable-macos-desktop
-      - run: flutter build macos
-      - run: |
-          echo CACHE-PATH=${{ steps.flutter-action.outputs.CACHE-PATH }}
-          echo CACHE-KEY=${{ steps.flutter-action.outputs.CACHE-KEY }}
-          echo CHANNEL=${{ steps.flutter-action.outputs.CHANNEL }}
-          echo VERSION=${{ steps.flutter-action.outputs.VERSION }}
-          echo ARCHITECTURE=${{ steps.flutter-action.outputs.ARCHITECTURE }}
-        shell: bash
+          name: web-release
+          path: ./build/linux
+
+  # build-Mac:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: subosito/flutter-action@v2.8.0
+  #       with:
+  #         channel: "stable"
+  #         architecture: x64
+  #     - run: flutter config --enable-macos-desktop
+  #     - run: flutter build macos
+  #     - run: |
+  #         echo CACHE-PATH=${{ steps.flutter-action.outputs.CACHE-PATH }}
+  #         echo CACHE-KEY=${{ steps.flutter-action.outputs.CACHE-KEY }}
+  #         echo CHANNEL=${{ steps.flutter-action.outputs.CHANNEL }}
+  #         echo VERSION=${{ steps.flutter-action.outputs.VERSION }}
+  #         echo ARCHITECTURE=${{ steps.flutter-action.outputs.ARCHITECTURE }}
+  #       shell: bash
 
